@@ -10,17 +10,35 @@ import './App.css'
 import "bulma/css/bulma.min.css"
 import { useMoralis } from "react-moralis";
 import toast from "react-hot-toast";
+import Web3 from "web3";
+import detectEthereumProvider from '@metamask/detect-provider'
 
 
 //!Custom components
 import Navbar from './components/_Navbar'
 
 
+//!Custom methods and functions
+
+
 //*App
 function App() {
 
-  const {isWeb3Enabled,account,login} = useMoralis();
+  const [web3Api,setWeb3Api] = useState({
+    provider:null,
+    isProviderLoaded:false,
+    web3:null,
+    contract:null
+  })
 
+  const {isWeb3Enabled,account,login,isAuthenticated,isInitialized,logout,provider} = useMoralis();
+
+  
+  //setAccountListener
+  const setAccountListener = (provider) => {
+    provider.on('accountsChanged', _ => window.location.reload())
+    provider.on('chainChanged', _ => window.location.reload())
+  }
 
   //donateCoin
   const donateCoin = async()=>{
@@ -33,6 +51,7 @@ function App() {
       throwError('Please try again withdraw coin process','error')
   }
 
+
   //checkAuthentication
   const checkAuthentication = async(method_name)=>{
     if(account){
@@ -43,21 +62,53 @@ function App() {
     }
   }
   
+
+  //throwError
   const throwError = (notification_message,notification_type) => {
     notification_type === 'success' ? toast.success(`${notification_message}`) : notification_type === 'error' ? toast.error(`${notification_message}`) : null;
   }
 
 
+
+  //useEffect
+  useEffect(()=>{
+    async function loadProvider(){
+      const provider = await detectEthereumProvider()
+      if(provider){
+        // setAccountListener(provider)
+        setWeb3Api({
+          provider:provider,
+          isProviderLoaded:true,
+          web3:new Web3(provider),
+          contract:contract
+        })
+      }
+      else{
+        throwError('Please install metamask','error')
+      }
+    }
+    loadProvider()
+  },[])
+
+
+
+  //return jsx to client
   return (
     <>
       <Navbar/>
       <div className="faucet-wrapper">
         <div className="faucet box p-6 is-rounded has-background-white-ter">
-            <div className="balance-view is-size-2">
+            <span>
+              <strong>Account: </strong>
+            </span>
+            <h1>
+                {account > 0 ? account : 'Not account'}
+            </h1>
+            <div className="balance-view is-size-2 mb-4">
                 Current Balance <strong>10</strong> ETH
             </div>
-            <button  type="button" className="btn mr-2" onClick={(e)=>checkAuthentication('donateCoin')}>Donate</button>
-            <button type="button" className="btn" onClick={(e)=>checkAuthentication('withdrawCoin')}>Withdraw</button>
+            <button  type="button" className="button is-primary mr-2" onClick={(e)=>checkAuthentication('donateCoin')}>Donate</button>
+            <button type="button" className="button is-link btn " onClick={(e)=>checkAuthentication('withdrawCoin')}>Withdraw</button>
         </div>
       </div>
     </>
