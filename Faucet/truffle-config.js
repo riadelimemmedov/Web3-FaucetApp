@@ -7,8 +7,8 @@ module.exports = {
      network_id: "*",       // Any network (default: none)
     },
     sepolia:{
-      url:process.env.SEPOLIA_NODE_URL_HTTPS,
-      accounts:[process.env.METAMASK_PRIVATE_KEY],
+      url:import.meta.env.SEPOLIA_NODE_URL_HTTPS,
+      accounts:[import.meta.env.METAMASK_PRIVATE_KEY],
       chainId:11155111
     }
   },

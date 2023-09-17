@@ -16,9 +16,12 @@ import detectEthereumProvider from '@metamask/detect-provider'
 
 //!Custom components
 import Navbar from './components/_Navbar'
+import  loadContract  from './ethereum/utils/load-contract';
 
 
 //!Custom methods and functions
+
+
 
 
 //*App
@@ -74,8 +77,11 @@ function App() {
   useEffect(()=>{
     async function loadProvider(){
       const provider = await detectEthereumProvider()
+      console.log('Provider is ', provider);
       if(provider){
         // setAccountListener(provider)
+        // const contract = await loadContract("Faucet", provider)
+        console.log('Zortt ', contract);
         setWeb3Api({
           provider:provider,
           isProviderLoaded:true,
