@@ -15,6 +15,7 @@
     "@truffle/hdwallet-provider": "^2.1.15",
     "axios": "^1.5.0",
     "bulma": "^0.9.4",
+    "dotenv": "^16.3.1",
     "ethers": "^5.7.2",
     "moralis": "^2.22.4",
     "moralis-v1": "^1.13.0",
