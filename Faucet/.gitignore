@@ -263,7 +263,7 @@ blockchain/history
 yarn.lock
 package-lock.json
 
-
+data
 src/ethereum/contracts
 
 # End of https://www.toptal.com/developers/gitignore/api/soliditytruffle
