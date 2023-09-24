@@ -6,31 +6,6 @@ import "./Owned.sol";
 import "./Logger.sol";
 import "./IFaucet.sol";
 
-// contract Faucet{
-
-//     address[] public funders;
-
-//     //The receive function is a special function in Solidity that is automatically invoked when a contract receives Ether without any specific function call
-//     receive() external payable{}
-
-//     function addFunds() external payable{
-//         funders.push(msg.sender);
-//     }
-
-//     function getAllFunders() public view returns(address[] memory){
-//         return funders;
-//     }
-
-//     function getFundersAtIndex(uint8 index) external view returns(address){
-//         address[] memory _funders = getAllFunders();
-//         return _funders[index];
-//     }
-
-// }
-
-//  instance.addFunds({value:"500000000000000",from:accounts[4]})
-
-
 
 contract Faucet is Owned,Logger,IFaucet{
     uint public numberOfFunders;

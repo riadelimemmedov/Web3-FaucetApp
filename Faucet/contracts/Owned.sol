@@ -13,5 +13,4 @@ contract Owned {
         require(msg.sender==owner,'Only owner call this function');
         _;
     }
-
 }
